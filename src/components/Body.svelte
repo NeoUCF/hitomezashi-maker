@@ -1,40 +1,56 @@
-<script>
-	let col = Array(30);
-	let row = Array(20);
+<script lang="ts">
+	let col = Array<boolean>(30).fill(false);
+	let row = Array<boolean>(20).fill(false);
+
+	$: console.log(col);
 </script>
 
 <div class="grid">
 	<div class="row">
-		{#each row as _, i}
-			<input class="rowInput" type="checkbox" id={`row-${i}`} />
+		{#each row as iRow, i}
+			<input
+				class="rowInput"
+				type="checkbox"
+				id={`row-${i}`}
+				bind:checked={iRow}
+			/>
 		{/each}
 	</div>
 	<div class="col">
-		{#each col as _, i}
-			<input class="colInput" type="checkbox" id={`col-${i}`} />
+		{#each col as iCol, i}
+			<input
+				class="colInput"
+				type="checkbox"
+				id={`col-${i}`}
+				bind:checked={iCol}
+			/>
 		{/each}
 	</div>
 	<div class="svg">
-		<svg width="100%" height="967px">
-			{#each col as _, i}
+		<svg width="100%" height="961px">
+			{#each col as offset, i}
 				<line
-					x1={i * 50.3 + 10}
-					x2={i * 50.3 + 10}
+					x1={i * 50 + 10}
+					x2={i * 50 + 10}
 					y1="10"
 					y2="5000"
 					stroke="white"
 					stroke-width="2"
+					stroke-dasharray={50}
+					stroke-dashoffset={offset ? 50 : 0}
 				/>
 			{/each}
 
-			{#each row as _, i}
+			{#each row as offset, i}
 				<line
 					x1="10"
 					x2="5000"
-					y1={i * 50.3 + 10}
-					y2={i * 50.3 + 10}
+					y1={i * 50 + 10}
+					y2={i * 50 + 10}
 					stroke="white"
 					stroke-width="2"
+					stroke-dasharray={50}
+					stroke-dashoffset={offset ? 50 : 0}
 				/>
 			{/each}
 
@@ -44,11 +60,11 @@
 </div>
 
 <style>
-	/* div {
-		overflow: scroll;
-		width: 90rem;
-	} */
 	.colInput {
+		margin-right: 32.7px;
+	}
+	.colInput:last-child {
+		margin-right: 0px;
 	}
 	.row {
 		grid-area: rowBox;
@@ -58,8 +74,8 @@
 	}
 	.col {
 		grid-area: colBox;
-		display: flex;
-		justify-content: space-between;
+		/* display: flex;
+		justify-content: space-between; */
 	}
 	.svg {
 		grid-area: svgBox;
