@@ -1,6 +1,7 @@
 <script lang="ts">
 	export let col;
 	export let row;
+	export let showGrid = false;
 </script>
 
 <div class="grid">
@@ -47,10 +48,24 @@
 					y2={i * 50 + 10}
 					stroke="white"
 					stroke-width="2"
-					stroke-dasharray={50}
+					stroke-dasharray="50"
 					stroke-dashoffset={offset ? 50 : 0}
 				/>
 			{/each}
+
+			{#if showGrid}
+				{#each col as _, i}
+					{#each row as _, j}
+						<circle
+							fill="red"
+							opacity="0.8"
+							cx={i * 50 + 10}
+							cy={j * 50 + 10}
+							r={3}
+						/>
+					{/each}
+				{/each}
+			{/if}
 
 			Sorry, your browser does not support inline SVG.
 		</svg>
