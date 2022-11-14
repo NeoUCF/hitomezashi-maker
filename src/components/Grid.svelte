@@ -1,6 +1,6 @@
 <script lang="ts">
-	export let col;
-	export let row;
+	export let col: boolean[];
+	export let row: boolean[];
 	export let showGrid = false;
 </script>
 
